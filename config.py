@@ -1,9 +1,10 @@
 import torch
 
-BATCH_SIZE = 8
+BATCH_SIZE = 4
 IMG_SIZE = 256
 NUM_EPOCHS = 10
 NUM_WORKERS = 1
+OPTIMIZER = "Adam"
 LR = 0.001
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
@@ -33,4 +34,5 @@ LABELS = {
 
 NUM_LABELS = len(LABELS)
 
+NEPTUNE_API_TOKEN = "your_api_key"
 OUT_DIR = "./outputs"
