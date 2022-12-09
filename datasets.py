@@ -1,8 +1,9 @@
 import glob
 import torch
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, DataLoader
 import torchvision.transforms as T
 from utils import get_img_data
+from config import NUM_WORKERS, BATCH_SIZE
 
 
 class UnoDataset(Dataset):
@@ -39,3 +40,33 @@ class UnoDataset(Dataset):
 
     def collate_fn(self, batch):
         return list(zip(*batch))
+
+
+def get_train_dataloader():
+    """
+    The function prepares and returns train dataloader.
+
+    Returns:
+        train_dataloader (DataLoader) - The train dataloader.
+    """
+
+    dataset = UnoDataset(train=True)
+    train_dataloader = DataLoader(
+        dataset, batch_size=BATCH_SIZE, num_workers=NUM_WORKERS
+    )
+
+    return train_dataloader
+
+
+def get_val_dataloader():
+    """
+    The function prepares and returns validation dataloader.
+
+    Returns:
+        val_dataloader (DataLoader) - The validation dataloader.
+    """
+
+    dataset = UnoDataset(train=False)
+    val_dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, num_workers=NUM_WORKERS)
+
+    return val_dataloader
