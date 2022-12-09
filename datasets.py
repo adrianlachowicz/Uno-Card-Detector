@@ -52,7 +52,7 @@ def get_train_dataloader():
 
     dataset = UnoDataset(train=True)
     train_dataloader = DataLoader(
-        dataset, batch_size=BATCH_SIZE, num_workers=NUM_WORKERS
+        dataset, batch_size=BATCH_SIZE, num_workers=NUM_WORKERS, collate_fn=dataset.collate_fn
     )
 
     return train_dataloader
@@ -67,6 +67,6 @@ def get_val_dataloader():
     """
 
     dataset = UnoDataset(train=False)
-    val_dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, num_workers=NUM_WORKERS)
+    val_dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, num_workers=NUM_WORKERS, collate_fn=dataset.collate_fn)
 
     return val_dataloader
