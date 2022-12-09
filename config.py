@@ -3,7 +3,8 @@ import torch
 BATCH_SIZE = 8
 IMG_SIZE = 256
 NUM_EPOCHS = 10
-NUM_WORKERS = 4
+NUM_WORKERS = 1
+LR = 0.001
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
