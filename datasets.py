@@ -13,14 +13,16 @@ class UnoDataset(Dataset):
         train (bool) - Use dataset for training or validation.
     """
 
-    def __init__(self, train: bool = True):
+    def __init__(self, train: bool = True, img_size: int = 256):
         if train is True:
             self.data_path = "./data/train/"
         else:
             self.data_path = "./data/valid/"
 
+        self.img_size = img_size
+
         self.xml_paths = glob.glob(self.data_path + "*.xml")
-        self.transform = T.Compose([T.ToTensor()])
+        self.transform = T.Compose([T.Resize((img_size, img_size)), T.ToTensor()])
 
     def __len__(self):
         return len(self.xml_paths)
@@ -28,7 +30,7 @@ class UnoDataset(Dataset):
     def __getitem__(self, item):
         xml_path = self.xml_paths[item]
 
-        img, labels, boxes = get_img_data(xml_path, self.data_path)
+        img, labels, boxes = get_img_data(xml_path, self.data_path, self.img_size)
 
         img = self.transform(img)
         labels = torch.tensor(labels, dtype=torch.int64)
@@ -52,7 +54,10 @@ def get_train_dataloader():
 
     dataset = UnoDataset(train=True)
     train_dataloader = DataLoader(
-        dataset, batch_size=BATCH_SIZE, num_workers=NUM_WORKERS, collate_fn=dataset.collate_fn
+        dataset,
+        batch_size=BATCH_SIZE,
+        num_workers=NUM_WORKERS,
+        collate_fn=dataset.collate_fn,
     )
 
     return train_dataloader
@@ -67,6 +72,11 @@ def get_val_dataloader():
     """
 
     dataset = UnoDataset(train=False)
-    val_dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, num_workers=NUM_WORKERS, collate_fn=dataset.collate_fn)
+    val_dataloader = DataLoader(
+        dataset,
+        batch_size=BATCH_SIZE,
+        num_workers=NUM_WORKERS,
+        collate_fn=dataset.collate_fn,
+    )
 
     return val_dataloader
