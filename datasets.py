@@ -59,6 +59,7 @@ def get_train_dataloader():
         batch_size=BATCH_SIZE,
         num_workers=NUM_WORKERS,
         collate_fn=dataset.collate_fn,
+        shuffle=True
     )
 
     return train_dataloader
@@ -78,6 +79,7 @@ def get_val_dataloader():
         batch_size=BATCH_SIZE,
         num_workers=NUM_WORKERS,
         collate_fn=dataset.collate_fn,
+        shuffle=False
     )
 
     return val_dataloader
