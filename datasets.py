@@ -22,7 +22,7 @@ class UnoDataset(Dataset):
 
         self.img_size = img_size
 
-        self.xml_paths = glob.glob(self.data_path + "*.xml")[:10]
+        self.xml_paths = glob.glob(self.data_path + "*.xml")
         self.transform = T.Compose([T.Resize((img_size, img_size)), T.ToTensor()])
 
     def __len__(self):
