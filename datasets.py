@@ -11,6 +11,7 @@ class UnoDataset(Dataset):
     The Uno dataset.
     Arguments:
         train (bool) - Use dataset for training or validation.
+        img_size (int) - Image size.
     """
 
     def __init__(self, train: bool = True, img_size: int = 256):
@@ -21,7 +22,7 @@ class UnoDataset(Dataset):
 
         self.img_size = img_size
 
-        self.xml_paths = glob.glob(self.data_path + "*.xml")
+        self.xml_paths = glob.glob(self.data_path + "*.xml")[:10]
         self.transform = T.Compose([T.Resize((img_size, img_size)), T.ToTensor()])
 
     def __len__(self):
