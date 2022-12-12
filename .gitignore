@@ -136,3 +136,6 @@ data/
 
 # Neptune directory
 .neptune
+
+# Model outputs
+outputs/*.pth
